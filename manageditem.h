@@ -104,10 +104,13 @@ class ManagedNumericItem: public ManagedItem<VarType>
     VarType optUpperBound;
 
 public:
-    ManagedNumericItem(): ManagedItem<VarType>{} {}
+    ManagedNumericItem(): ManagedItem<VarType>() {}
 
     ManagedNumericItem(VarType f_var,std::string f_name):
-        ManagedItem<VarType>{f_var,f_name} {}
+        ManagedItem<VarType>(f_var,f_name) {}
+
+    ManagedNumericItem(ManagedItemBase* parent_this_p,VarType f_itemData,std::string f_name):
+        ManagedItem<VarType>(parent_this_p,f_itemData,f_name) {}
 
     void setBounds(VarType lower, VarType upper);
     void setOptBounds(VarType lower, VarType upper);
