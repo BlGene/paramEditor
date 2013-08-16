@@ -26,13 +26,15 @@ class SettingsManager : public QWidget
 {
     Q_OBJECT
 
+
 public:
     SettingsManager(QWidget * const parent=nullptr);
 
+    Ui::SettingsManager* ui;
+
+
     void toogleWindow();
     void render(ManagedItemBase& item);
-
-    Ui::SettingsManager* ui;
 
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
@@ -44,12 +46,6 @@ private slots:
 private:
     QWidget *m_parent;
 
-    void createActions();
-    void createMenus();
-    void setSettingsObject(QSettings *settings);
-
-
-
     QMenu *fileMenu;
     QMenu *optionsMenu;
     QAction *openSettingsAct;
@@ -60,6 +56,13 @@ private:
     QAction *fallbacksAct;
     QAction *aboutAct;
     QAction *aboutQtAct;
+
+    void createActions();
+    void createMenus();
+    void setSettingsObject(QSettings *settings);
+
+
+
 };
 
 

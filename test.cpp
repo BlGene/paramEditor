@@ -14,10 +14,11 @@ Test1::Test1()
 
     //Causes segfault because of copy operator
     //cout << "Start" <<endl;
-    //m_subclass = Test2{};
+    m_subclass2 = Test3{};
     //cout << "Stop" <<endl;
     //cout << "New instance address: " << &m_subclass << endl;
 
+    bindName(name);
     bindVar(m_subclass);
     bindVar(m_subclass2);
 
@@ -28,8 +29,10 @@ int main(int argc, char** argv)
 {
     Test1 inst1{};
 
-    cout <<  "Print: " << endl;
-    inst1.print();
+    //cout <<  "Print: " << endl;
+    //inst1.print();
+
+    cout << "XXX" << inst1.name << endl;
 
     QApplication application(argc,argv);
     SettingsManager smngr;
@@ -38,8 +41,6 @@ int main(int argc, char** argv)
     smngr.show();
 
     return application.exec();
-
-
 }
 
 

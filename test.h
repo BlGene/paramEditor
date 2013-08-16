@@ -69,14 +69,16 @@ class Test3: public ManagedItemBase
 class Test1: public ManagedItemBase
 {
 public:
+    std::string name{"Test1"};
+
 
     //ManagedItem<bool>        var1{false, "var 1"};
     //ManagedNumericItem<int>  var2{1    , "var 2"};
     //ManagedNumericItem<int>  var3{4   ,  "var 3"};
 
-    C_VAR(bool,var1,true,"var 1")
-    C_VAR(int, var2,   1,"var 2")
-    C_VAR(int, var3,   4,"var 3")
+    C_VAR(bool, var1, true, "var 1")
+    C_VAR(int,  var2,    1, "var 2")
+    C_VAR(int,  var3,    4, "var 3")
 
 
 public:

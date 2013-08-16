@@ -21,8 +21,8 @@ using namespace std;
 
 SettingsManager::SettingsManager(QWidget * const parent):
     QWidget(parent),
-    m_parent(parent),
-    ui(new Ui::SettingsManager)
+    ui(new Ui::SettingsManager),
+    m_parent(parent)
 {
     ui->setupUi(this);
     setWindowTitle("Settings Editor");
@@ -37,6 +37,8 @@ void SettingsManager::render(ManagedItemBase &item)
 {
 
     cout << "New Settings Manager" << endl;
+
+    this->ui->treeView->setModel(&item);
 
     item.render(this);
 

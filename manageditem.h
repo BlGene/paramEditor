@@ -8,11 +8,14 @@ using namespace std;
 
 #include  <typeinfo>
 
+#include <QAbstractItemModel>
+
 class SettingsManager;
 class QFormLayout;
 
 
 class ManagedItemBase
+        :public QAbstractItemModel
 {
 public:
     std::string name;
@@ -21,7 +24,6 @@ public:
 
 
     ManagedItemBase* parent();
-    ManagedItemBase* child(int row);
 
     void setTooltip(std::string& f_tooltip);
     void setName(std::string& f_name);
@@ -49,17 +51,49 @@ public:
 
     void bindVar(ManagedItemBase& child );
 
-    int childCount() const;
-    int row() const;
+    void bindName(std::string f_name);
 
     virtual void print(std::string prefix="") const;
 
     virtual void render(SettingsManager* smngr,QFormLayout* cur_widget=nullptr);
 
 
+    // Stuff so that we can be a QAbstractItemModel
+    //--------------------------------------------------------------------------
+    // When subclassing QAbstractItemModel, at the very least you must implement
+    // index(), parent(), rowCount(), columnCount(), and data(). These functions
+    // are used in all read-only models, and form the basis of editable models.
+
+    QModelIndex index(int row, int column,
+                      const QModelIndex &parent = QModelIndex()) const;
+
+    QModelIndex parent(const QModelIndex &index) const;
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+
+    QVariant data(const QModelIndex &index, int role) const;
+
+    QVariant data(int column) const;
+
+    int childCount() const;
+
+    int columnCount() const;
+
+    bool hasChildren() const {return true;}
+
+
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const;
+
+    int row() const;
+
+
+
 private:
     vector<ManagedItemBase*> childItems;
-    ManagedItemBase *parentItem;
+    ManagedItemBase *parentItem = nullptr;
 
 };
 
@@ -79,7 +113,7 @@ public:
 
     void init(ManagedItemBase* parent, VarType f_itemData,std::string f_tooltip);
 
-    void setData(VarType &f_itemData);
+    void setValue(VarType &f_itemData);
     VarType& getData();
 
     void print(std::string prefix="") const;

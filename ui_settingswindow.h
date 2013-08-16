@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settingswindow.ui'
 **
-** Created: Thu Aug 15 22:08:28 2013
+** Created: Fri Aug 16 17:49:03 2013
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,20 +38,25 @@ public:
         if (SettingsManager->objectName().isEmpty())
             SettingsManager->setObjectName(QString::fromUtf8("SettingsManager"));
         SettingsManager->resize(400, 300);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(1);
+        sizePolicy.setVerticalStretch(1);
+        sizePolicy.setHeightForWidth(SettingsManager->sizePolicy().hasHeightForWidth());
+        SettingsManager->setSizePolicy(sizePolicy);
         splitter = new QSplitter(SettingsManager);
         splitter->setObjectName(QString::fromUtf8("splitter"));
         splitter->setGeometry(QRect(0, 0, 401, 301));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(splitter->sizePolicy().hasHeightForWidth());
         splitter->setSizePolicy(sizePolicy);
         splitter->setOrientation(Qt::Horizontal);
         treeView = new QTreeView(splitter);
         treeView->setObjectName(QString::fromUtf8("treeView"));
         treeView->setEnabled(true);
-        sizePolicy.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
-        treeView->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(1);
+        sizePolicy1.setHeightForWidth(treeView->sizePolicy().hasHeightForWidth());
+        treeView->setSizePolicy(sizePolicy1);
         splitter->addWidget(treeView);
         scrollArea = new QScrollArea(splitter);
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
@@ -61,19 +66,17 @@ public:
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
         scrollAreaWidgetContents_3->setEnabled(true);
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 195, 297));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 135, 297));
         sizePolicy.setHeightForWidth(scrollAreaWidgetContents_3->sizePolicy().hasHeightForWidth());
         scrollAreaWidgetContents_3->setSizePolicy(sizePolicy);
         formLayoutWidget = new QWidget(scrollAreaWidgetContents_3);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(0, 0, 191, 291));
+        formLayoutWidget->setGeometry(QRect(0, 0, 290, 291));
         ConfLayout = new QFormLayout(formLayoutWidget);
         ConfLayout->setObjectName(QString::fromUtf8("ConfLayout"));
         ConfLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
         ConfLayout->setContentsMargins(0, 0, 0, 0);
         scrollArea->setWidget(scrollAreaWidgetContents_3);
-        formLayoutWidget->raise();
-        treeView->raise();
         splitter->addWidget(scrollArea);
 
         retranslateUi(SettingsManager);

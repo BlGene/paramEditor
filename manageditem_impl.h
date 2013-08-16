@@ -55,7 +55,7 @@ ManagedItem<VarType>::ManagedItem(ManagedItemBase* parent_this_p, VarType f_item
 
 
 template< typename VarType>
-void ManagedItem<VarType>::setData(VarType &f_itemData)
+void ManagedItem<VarType>::setValue(VarType &f_itemData)
 {
     itemData = f_itemData;
 }
