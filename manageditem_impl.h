@@ -87,6 +87,16 @@ void  ManagedItem<VarType>::render(SettingsManager* smngr,QFormLayout* cur_widge
 
 
 
+template< typename VarType>
+QVariant ManagedItem<VarType>::data(int column) const
+{
+    if (column != 0)
+            return QVariant();
+    return QVariant(QString(name.c_str()));
+}
+
+
+
 
 
 //------------------------------------------------------------------------------

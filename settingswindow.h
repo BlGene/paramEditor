@@ -14,6 +14,7 @@ class QSettings;
 class QLayout;
 
 class ManagedItemBase;
+class ConfTreeModel;
 
 #include "ui_settingswindow.h"
 
@@ -34,7 +35,7 @@ public:
 
 
     void toogleWindow();
-    void render(ManagedItemBase& item);
+    void render(ConfTreeModel *item);
 
 protected:
     virtual void keyPressEvent(QKeyEvent *e);

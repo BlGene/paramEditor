@@ -15,7 +15,6 @@ class QFormLayout;
 
 
 class ManagedItemBase
-        :public QAbstractItemModel
 {
 public:
     std::string name;
@@ -57,41 +56,16 @@ public:
 
     virtual void render(SettingsManager* smngr,QFormLayout* cur_widget=nullptr);
 
-
-    // Stuff so that we can be a QAbstractItemModel
-    //--------------------------------------------------------------------------
-    // When subclassing QAbstractItemModel, at the very least you must implement
-    // index(), parent(), rowCount(), columnCount(), and data(). These functions
-    // are used in all read-only models, and form the basis of editable models.
-
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const;
-
-    QModelIndex parent(const QModelIndex &index) const;
-
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-
-    QVariant data(const QModelIndex &index, int role) const;
-
-    QVariant data(int column) const;
-
-    int childCount() const;
-
-    int columnCount() const;
-
-    bool hasChildren() const {return true;}
-
-
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
-
     int row() const;
 
+    virtual QVariant data(int column) const
+    {
+        return QVariant();
+    }
 
 
-private:
+
+//private:
     vector<ManagedItemBase*> childItems;
     ManagedItemBase *parentItem = nullptr;
 
@@ -119,6 +93,11 @@ public:
     void print(std::string prefix="") const;
 
     void render(SettingsManager* smngr,QFormLayout* cur_widget);
+
+
+    QVariant data(int column) const;
+
+    int row() const;
 
 
 protected:
@@ -153,6 +132,66 @@ public:
     void getOptBounds(VarType& lower, VarType& upper) const;
 
 };
+
+/*******************************************************************************
+ *
+ * ManagedItemInterface
+ *
+ *
+ ******************************************************************************/
+
+
+class ConfTreeModel
+        :public QAbstractItemModel
+{
+
+public:
+    friend ManagedItemBase;
+    // Stuff so that we can be a QAbstractItemModel
+    //--------------------------------------------------------------------------
+    // When subclassing QAbstractItemModel, at the very least you must implement
+    // index(), parent(), rowCount(), columnCount(), and data(). These functions
+    // are used in all read-only models, and form the basis of editable models.
+
+    ConfTreeModel(ManagedItemBase* f_rootItem)
+    {
+        rootItem = f_rootItem;
+    }
+
+    void render(SettingsManager* ptr)
+    {
+        if(rootItem)
+        {
+            rootItem->render(ptr);
+        }
+    }
+
+    QModelIndex index(int row, int column,
+                      const QModelIndex &parent = QModelIndex()) const;
+
+    QModelIndex parent(const QModelIndex &index) const;
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+
+    QVariant data(const QModelIndex &index, int role) const;
+
+    int childCount() const;
+
+    int columnCount() const;
+
+    //bool hasChildren() const {return true;}
+
+
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const;
+
+
+private:
+    ManagedItemBase* rootItem;
+};
+
 
 template class ManagedItem<bool>;
 template class ManagedItem<int>;

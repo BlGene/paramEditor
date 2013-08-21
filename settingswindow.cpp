@@ -33,14 +33,14 @@ SettingsManager::SettingsManager(QWidget * const parent):
 
 }
 
-void SettingsManager::render(ManagedItemBase &item)
+void SettingsManager::render(ConfTreeModel *ctm)
 {
 
     cout << "New Settings Manager" << endl;
 
-    this->ui->treeView->setModel(&item);
+    this->ui->treeView->setModel(ctm);
 
-    item.render(this);
+    ctm->render(this);
 
 
 }
