@@ -1,7 +1,7 @@
 # set project's name
-PROJECT( parameditor )
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT( parameditor_demo )
 
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 SET (CMAKE_CXX_COMPILER             "/usr/bin/clang++")
 
@@ -16,13 +16,14 @@ FIND_PACKAGE( Qt4 REQUIRED )
 # with SET() command you can change variables or define new ones
 # here we define SAMPLE_SRCS variable that contains a list of all .cpp files
 # note that we don't need \ at the end of line
-SET( SAMPLE_SRCS ./src/confitembase.cpp ./src/confitem.cpp ./src/conftreemodel.cpp ./src/settingswindow.cpp   )
+SET( SAMPLE_SRCS ./src/test.cpp  )
 
 # another list, this time it includes all header files that should be treated with moc
-SET( SAMPLE_MOC_HDRS  ./h/settingswindow.h)
+#SET( SAMPLE_MOC_HDRS  ./h/settingswindow.h)
+#./h/confitem.h ./h/conftreemodel.h
 
 # some .ui files
-SET( SAMPLE_UIS ./ui/settingswindow.ui )
+#SET( SAMPLE_UIS ./ui/settingswindow.ui )
 #   ./src/ui/Dialog1.ui
 #   ./src/ui/Dialog2.ui
 #)
@@ -48,16 +49,16 @@ QT4_WRAP_CPP( SAMPLE_MOC_SRCS ${SAMPLE_MOC_HDRS} )
 
 # we need this to be able to include headers produced by uic in our code
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ./h )
+INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ./h ~/local/include/parameditor )
 
 # here we instruct CMake to build "sample" executable from all of the source files
-ADD_LIBRARY( parameditor SHARED ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
+ADD_EXECUTABLE( parameditor_demo ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
 
 # last thing we have to do is to tell CMake what libraries our executable needs,
 # luckily FIND_PACKAGE prepared QT_LIBRARIES variable for us:
-TARGET_LINK_LIBRARIES( parameditor ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( parameditor_demo ${QT_LIBRARIES} ~/local/lib/libparameditor.so )
 
-MESSAGE( "prefix",${CMAKE_INSTALL_PREFIX} )
 
-INSTALL( TARGETS parameditor DESTINATION lib )
-INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/h/" DESTINATION include/parameditor FILES_MATCHING PATTERN "*.h")
+INSTALL( TARGETS parameditor_demo DESTINATION bin )
+
+

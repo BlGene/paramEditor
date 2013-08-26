@@ -13,15 +13,15 @@ class QAction;
 class QSettings;
 class QLayout;
 
-class ManagedItemBase;
+class ConfItemBase;
 class ConfTreeModel;
 
-#include "ui_settingswindow.h"
 
-//namespace Ui
-//{
-//    class SettingsManager;
-//}
+namespace Ui
+{
+    class SettingsManager;
+}
+
 
 class SettingsManager : public QWidget
 {
@@ -30,12 +30,13 @@ class SettingsManager : public QWidget
 
 public:
     SettingsManager(QWidget * const parent=nullptr);
+    ~SettingsManager();
 
     Ui::SettingsManager* ui;
 
 
     void toogleWindow();
-    void render(ConfTreeModel *item);
+    void render(ConfItemBase *item);
 
 protected:
     virtual void keyPressEvent(QKeyEvent *e);
@@ -45,6 +46,9 @@ private slots:
     void about();
 
 private:
+
+    ConfTreeModel* m_model;
+
     QWidget *m_parent;
 
     QMenu *fileMenu;

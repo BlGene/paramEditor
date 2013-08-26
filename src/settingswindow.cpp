@@ -10,21 +10,60 @@
 #include <QGridLayout>
 #include <QCheckBox>
 
+
+#include <QSplitter>
+#include <QScrollArea>
+#include <QTreeView>
+#include <QFormLayout>
+
 using namespace std;
 
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 
-#include "manageditem.h"
+#include "confitembase.h"
+#include "conftreemodel.h"
+
+
 
 //extern template class ManagedItem<bool>;
 
 SettingsManager::SettingsManager(QWidget * const parent):
     QWidget(parent),
     ui(new Ui::SettingsManager),
+    m_model(nullptr),
     m_parent(parent)
 {
     ui->setupUi(this);
+
+
+
+    /*
+    QVBoxLayout* layout = new QVBoxLayout;
+
+    QSplitter* splitter = new QSplitter;
+
+    //QScrollArea* scroll = new QScrollArea;
+
+    //QFormLayout* layout = new QFormLayout;
+
+    QTreeView* treeView = new QTreeView;
+
+    QWidget* container = new QWidget;
+
+
+    //scroll->setWidget(layout);
+
+    splitter->addWidget(treeView);
+    splitter->addWidget(container);
+
+    layout->addWidget(splitter);
+
+    parent->Widget(splitter);
+
+    */
+
+
     setWindowTitle("Settings Editor");
 
 
@@ -33,15 +72,21 @@ SettingsManager::SettingsManager(QWidget * const parent):
 
 }
 
-void SettingsManager::render(ConfTreeModel *ctm)
+SettingsManager::~SettingsManager()
 {
+    if(m_model)
+        delete m_model;
+}
 
+void SettingsManager::render(ConfItemBase *item)
+{
     cout << "New Settings Manager" << endl;
 
-    this->ui->treeView->setModel(ctm);
+    m_model = new ConfTreeModel(item);
 
-    ctm->render(this);
+    this->ui->treeView->setModel(m_model);
 
+    m_model->render(this);
 
 }
 
