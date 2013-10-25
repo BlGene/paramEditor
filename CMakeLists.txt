@@ -1,5 +1,5 @@
 # set project's name
-PROJECT( parameditor )
+PROJECT( paramEditor )
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 
@@ -51,13 +51,14 @@ QT4_WRAP_CPP( SAMPLE_MOC_SRCS ${SAMPLE_MOC_HDRS} )
 INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ./h )
 
 # here we instruct CMake to build "sample" executable from all of the source files
-ADD_LIBRARY( parameditor SHARED ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
+ADD_LIBRARY( paramEditor SHARED ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
 
 # last thing we have to do is to tell CMake what libraries our executable needs,
 # luckily FIND_PACKAGE prepared QT_LIBRARIES variable for us:
-TARGET_LINK_LIBRARIES( parameditor ${QT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( paramEditor ${QT_LIBRARIES} )
 
-MESSAGE( "prefix",${CMAKE_INSTALL_PREFIX} )
+MESSAGE( "Install prefix" ${CMAKE_INSTALL_PREFIX} )
 
-INSTALL( TARGETS parameditor DESTINATION lib )
-INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/h/" DESTINATION include/parameditor FILES_MATCHING PATTERN "*.h")
+INSTALL( TARGETS paramEditor DESTINATION lib )
+INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/h/" DESTINATION include/paramEditor FILES_MATCHING PATTERN "*.h")
+INSTALL( FILES FindParamEditor.cmake DESTINATION share/cmake/Modules)

@@ -93,6 +93,14 @@ void ConfItem<bool>::render(SettingsManager* smngr,QFormLayout* cur_widget)
     element = new QCheckBox(smngr);
     element->setLayoutDirection(Qt::RightToLeft);
 
+    //cout << "Render: " << name << " " << itemData << endl;
+
+    if(itemData)
+        element->setCheckState(Qt::Checked);
+    else
+        element->setCheckState(Qt::Unchecked);
+
+
     cur_widget->addRow(QString(name.c_str()),element);
 
     //XXX wait for Qt 5 to make signals public

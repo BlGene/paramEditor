@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settingswindow.ui'
 **
-** Created: Mon Aug 26 04:10:35 2013
+** Created: Fri Oct 25 15:05:54 2013
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

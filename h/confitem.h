@@ -59,12 +59,13 @@ public:
     void render(SettingsManager* smngr,QFormLayout* cur_widget);
 
 
+    VarType getValue() const;
+
 protected:
     VarType itemData;
 
     typename QtElement<VarType>::Type* element;
 
-    VarType getValue() const;
 
 };
 
