@@ -77,6 +77,7 @@ void ConfItemBase::render(SettingsManager* smngr,QFormLayout* cur_widget)
 {
     //cout << "Base Render Called " << endl;
 
+    //Put all the configurations variables in a layout
     QFormLayout* layout = new QFormLayout();
 
     if(childItems.size()>0)
@@ -85,22 +86,39 @@ void ConfItemBase::render(SettingsManager* smngr,QFormLayout* cur_widget)
 
         for(int i=0;i<childItems.size();i++)
         {
-            //cout << "render addr: " << &(childItems.at(i)) << " "<< childItems.at(i)->name << endl;
-            childItems.at(i)->render(smngr,layout);
-        }
+            //cout << "render addr: " << &(childItems.at(i))
+            //     << " "<< childItems.at(i)->name << endl;
 
+            //This calls the overloaded render functions that actually add
+            //elements
+            childItems.at(i)->render(smngr,layout);
+
+            /*
+            QLabel* myLabel = new QLabel("test text");
+            QFrame* myLine = new QFrame();
+            myLine->setFrameStyle(QFrame::Sunken);
+            myLine->setFrameShape(QFrame::HLine);
+
+            layout->addRow(myLabel);
+            layout->addRow(myLine);
+            */
+        }
     }
 
-    QGroupBox* box = new QGroupBox(QString(name.c_str()),smngr);
-    box->setLayout(layout);
 
     if(cur_widget == nullptr)
     {
-        smngr->ui->ConfLayout->addWidget(box);
+        smngr->ui->ConfLayout->addRow(layout);
     }
+
     else
     {
-        cur_widget->addWidget(box);
+        QGroupBox* box = new QGroupBox(QString(name.c_str()),smngr);
+        box->setLayout(layout);
+
+
+
+        cur_widget->addRow(box);
     }
 
 }
@@ -161,5 +179,3 @@ QVariant ConfItemBase::data(int column) const
         return QVariant();
     return QVariant(QString(name.c_str()));
 }
-
-

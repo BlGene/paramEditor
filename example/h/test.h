@@ -8,7 +8,7 @@
 using namespace std;
 
 template <typename testType>
-class Test2: public ConfItemBase
+class Test1_1: public ConfItemBase
 {
     C_OBJECT // Sets the object name to the class name
 
@@ -21,10 +21,28 @@ class Test2: public ConfItemBase
 
 };
 
-class Test3: public ConfItemBase
+
+class Test1_2_1: public ConfItemBase
 {
 public:
-    ~Test3()
+    ~Test1_2_1()
+    {
+        cout << "Destructor called" << endl;
+    };
+private:
+    C_OBJECT
+
+    std::string name{"Function C"};
+
+    C_VAR(bool,var2_1,true,"XVar 1")
+    C_VAR(int, var2_2,   2,"XVar 2")
+
+};
+
+class Test1_2: public ConfItemBase
+{
+public:
+    ~Test1_2()
     {
         cout << "Destructor called" << endl;
     };
@@ -36,7 +54,12 @@ private:
     C_VAR(bool,var2_1,true,"XVar 1")
     C_VAR(int, var2_2,   2,"XVar 2")
 
+
+    Test1_2_1 m_subclass;
+public:
+    Test1_2();
 };
+
 
 
 
@@ -57,9 +80,9 @@ public:
 
 public:
 
-    Test2<bool> m_subclass;
+    Test1_1<bool> m_subclass;
 
-    Test3 m_subclass2;
+    Test1_2 m_subclass2;
 
 public:
     Test1();

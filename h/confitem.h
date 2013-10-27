@@ -6,12 +6,16 @@
 #include <string>
 #include <typeinfo>
 
-#include <QVariant>
-#include <QLabel>
-#include <QSpinBox>
-#include <QCheckBox>
+//#include <QLabel>
+//#include <QSpinBox>
+//#include <QCheckBox>
 
 #include "confitembase.h"
+
+class QLabel;
+class QSpinBox;
+class QCheckBox;
+
 
 using namespace std;
 
@@ -41,8 +45,6 @@ struct QtElement<int>
 template< typename VarType>
 class ConfItem: public ConfItemBase
 {
-    //friend typename QtElement<VarType>::Type;
-
 public:
     ConfItem();
     ConfItem(VarType f_itemData,std::string f_name);
@@ -61,12 +63,11 @@ public:
 
     VarType getValue() const;
 
+
 protected:
     VarType itemData;
 
     typename QtElement<VarType>::Type* element;
-
-
 };
 
 
@@ -79,6 +80,7 @@ class NumericConfItem: public ConfItem<VarType>
 
     VarType optLowerBound;
     VarType optUpperBound;
+
 
 public:
     NumericConfItem(): ConfItem<VarType>() {}

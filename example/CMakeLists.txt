@@ -1,5 +1,5 @@
 # set project's name
-PROJECT( parameditor_demo )
+PROJECT( paramEditorDemo )
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
@@ -8,6 +8,16 @@ SET (CMAKE_CXX_COMPILER             "/usr/bin/clang++")
 # enable warnings
 ADD_DEFINITIONS( -Wall -fPIC )
 SET(CMAKE_CXX_FLAGS "-O0 -ggdb -DGL_GLEXT_PROTOTYPES -lGLEW  -std=c++11")
+
+
+set(CMAKE_MODULE_PATH ~/local/share/cmake/Modules)
+message("Looking for modules in: " ${CMAKE_MODULE_PATH})
+
+include(FindParamEditor)
+if(NOT EXISTS ${PARAMEDITOR_INCLUDE_DIR}) # and ${PARAMEDITOR_LIBRARIES})
+    message( FATAL_ERROR "Failed to find ParamEditor")
+endif()
+
 
 # this command finds Qt4 libraries and sets all required variables
 # note that it's Qt4, not QT4 or qt4
@@ -49,16 +59,16 @@ QT4_WRAP_CPP( SAMPLE_MOC_SRCS ${SAMPLE_MOC_HDRS} )
 
 # we need this to be able to include headers produced by uic in our code
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ./h ~/local/include/parameditor )
-
+INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ./h ${PARAMEDITOR_INCLUDE_DIR} )
 # here we instruct CMake to build "sample" executable from all of the source files
-ADD_EXECUTABLE( parameditor_demo ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
+ADD_EXECUTABLE( paramEditorDemo ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
 
 # last thing we have to do is to tell CMake what libraries our executable needs,
 # luckily FIND_PACKAGE prepared QT_LIBRARIES variable for us:
-TARGET_LINK_LIBRARIES( parameditor_demo ${QT_LIBRARIES} ~/local/lib/libparameditor.so )
+TARGET_LINK_LIBRARIES( paramEditorDemo ${QT_LIBRARIES}
+    ${PARAMEDITOR_LIBRARIES})
 
 
-INSTALL( TARGETS parameditor_demo DESTINATION bin )
+INSTALL( TARGETS paramEditorDemo DESTINATION bin )
 
 

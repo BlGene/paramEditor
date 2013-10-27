@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settingswindow.ui'
 **
-** Created: Fri Oct 25 15:05:54 2013
+** Created: Sat Oct 26 04:27:25 2013
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -67,7 +67,7 @@ public:
         scrollAreaWidgetContents_3 = new QWidget();
         scrollAreaWidgetContents_3->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_3"));
         scrollAreaWidgetContents_3->setEnabled(true);
-        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 281, 378));
+        scrollAreaWidgetContents_3->setGeometry(QRect(0, 0, 316, 378));
         sizePolicy.setHeightForWidth(scrollAreaWidgetContents_3->sizePolicy().hasHeightForWidth());
         scrollAreaWidgetContents_3->setSizePolicy(sizePolicy);
         verticalLayout_2 = new QVBoxLayout(scrollAreaWidgetContents_3);

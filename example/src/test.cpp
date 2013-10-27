@@ -7,6 +7,11 @@
 
 #include "conftreemodel.h"
 
+Test1_2::Test1_2()
+{
+    bindName(name);
+    bindVar(m_subclass);
+}
 
 //Constructor
 Test1::Test1()
