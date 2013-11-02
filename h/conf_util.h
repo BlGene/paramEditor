@@ -33,7 +33,7 @@ struct MIType<int>
 
 
 //      C_VAR( bool tmpvar = false,
-#define C_VAR(VARTYPE,VARNAME,VARVAL,DESCR) MIType<VARTYPE>::Type VARNAME{this, VARVAL,DESCR};
+#define C_VAR(VARTYPE,VARNAME,VARVAL,DESCR) MIType<VARTYPE>::Type VARNAME{ ((ConfItemBase*)this) , VARVAL,DESCR};
 
 
 

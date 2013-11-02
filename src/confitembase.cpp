@@ -3,16 +3,24 @@
 #include <algorithm>
 #include <vector>
 
+#if PARAMEDITOR_USE_PYTHON
+    #include <boost/python.hpp>
+    #undef BO // see http://stackoverflow.com/a/15078676/1037407
+#endif //PARAMEDITOR_USE_PYTHON
+
+
+#include <QVariant>
 #include <QFrame>
 #include <QGroupBox>
 #include <QSpinBox>
-#include <QGroupBox>
 #include <QString>
+#include <QLabel>
+#include <QCheckBox>
 
 #include "settingswindow.h"
-
 #include "ui_settingswindow.h"
 
+using namespace std;
 
 //------------------------------------------------------------------------------
 // ConfItemBase
@@ -179,3 +187,32 @@ QVariant ConfItemBase::data(int column) const
         return QVariant();
     return QVariant(QString(name.c_str()));
 }
+
+
+
+
+
+//------------------------------------------------------------------------------
+// Python Bindings
+//
+
+#if PARAMEDITOR_USE_PYTHON
+
+using namespace boost::python;
+
+
+//Use *lib*paramEditor because cmake automatically adds a "lib" prefix to the library
+//also this "lib" prefix is expected on unix systems.
+BOOST_PYTHON_MODULE(libparamEditor)
+{
+
+    class_<ConfItemBase>("ConfItemBase")
+        .def("size",    &ConfItemBase::size)
+        .def("getChild",&ConfItemBase::getChild2, return_value_policy<reference_existing_object>() )
+    ;
+
+
+}
+
+
+#endif //PARAMEDITOR_USE_PYTHON

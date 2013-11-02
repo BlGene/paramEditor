@@ -5,16 +5,15 @@
 #include <iostream>
 #include <string>
 #include <typeinfo>
-#include <QVariant>
-
-using namespace std;
 
 class SettingsManager;
+class QLabel;
+class QSpinBox;
+class QCheckBox;
 class QFormLayout;
+class QVariant;
 
-#include <QLabel>
-#include <QSpinBox>
-#include <QCheckBox>
+
 
 /*******************************************************************************
  *
@@ -104,10 +103,16 @@ public:
         return childItems.at(row);
     }
 
+    ConfItemBase& getChild2(int row) const
+    {
+        return *childItems.at(row);
+    }
+
     int size() const
     {
         return childItems.size();
     }
+
 
     //Qt compatibility functions
     //--------------------------------------------------------------------------
@@ -117,7 +122,7 @@ public:
 
 
 private:
-    vector<ConfItemBase*> childItems;
+    std::vector<ConfItemBase*> childItems;
     ConfItemBase *parentItem = nullptr;
 
 };

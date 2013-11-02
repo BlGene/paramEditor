@@ -5,14 +5,23 @@
 
 
 #include <QLayout>
-#include <QString>
-#include <QCheckBox>
-#include <QLabel>
 #include <QFormLayout>
+#include <QString>
+#include <QLabel>
+#include <QCheckBox>
+#include <QSpinBox>
 
 #include "settingswindow.h"
 
 #include "confitem.h"
+
+
+using namespace std;
+
+void say_hello(const char* name) {
+    cout << "Hello " <<  name << "!\n";
+}
+
 
 //------------------------------------------------------------------------------
 // ConfItem
@@ -171,11 +180,15 @@ void NumericConfItem<VarType>::getOptBounds(VarType& lower, VarType& upper) cons
 
 
 
+
+
+
 //Template Specializations
 
 template class ConfItem<bool>;
 template class ConfItem<int>;
 template class NumericConfItem<int>;
+
 
 
 

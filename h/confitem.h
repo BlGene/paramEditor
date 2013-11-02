@@ -1,35 +1,28 @@
 #ifndef CONFITEM_H
 #define CONFITEM_H
 
+
 #include <vector>
 #include <iostream>
 #include <string>
 #include <typeinfo>
-
-//#include <QLabel>
-//#include <QSpinBox>
-//#include <QCheckBox>
 
 #include "confitembase.h"
 
 class QLabel;
 class QSpinBox;
 class QCheckBox;
-
-
-using namespace std;
-
-
-class SettingsManager;
 class QFormLayout;
+class SettingsManager;
 
-
+//This is the default option
 template< typename Var>
 struct QtElement
 {
     typedef QLabel Type;
 };
 
+//These are the specializations
 template<>
 struct QtElement<bool>
 {
@@ -41,6 +34,7 @@ struct QtElement<int>
 {
     typedef QSpinBox Type;
 };
+
 
 template< typename VarType>
 class ConfItem: public ConfItemBase
@@ -63,11 +57,32 @@ public:
 
     VarType getValue() const;
 
+    //The assign operator
+    ConfItem<VarType> & operator= (const VarType& other)
+    {
+        if(itemData != other)
+            itemData = other;
+
+        //by convention always return *this
+        return *this;
+    }
+
+    //Conversion operators
+    operator VarType()
+    {
+        return itemData;
+    }
+
+    operator VarType() const
+    {
+        return itemData;
+    }
 
 protected:
     VarType itemData;
 
     typename QtElement<VarType>::Type* element;
+
 };
 
 
@@ -99,7 +114,15 @@ public:
 
 };
 
+
+
+
+
+
 #include "conf_util.h"
+
+
+
 
 
 
