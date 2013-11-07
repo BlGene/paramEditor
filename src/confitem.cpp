@@ -64,12 +64,18 @@ void ConfItem<VarType>::setValue(VarType &f_itemData)
     itemData = f_itemData;
 }
 
+template< typename VarType>
+void ConfItem<VarType>::setData(const VarType &f_itemData)
+{
+    itemData = f_itemData;
+}
 
 template< typename VarType>
 VarType& ConfItem<VarType>::getData()
 {
     return  itemData;
 }
+
 
 
 template< typename VarType>
@@ -90,6 +96,18 @@ void  ConfItem<VarType>::render(SettingsManager* smngr,QFormLayout* cur_widget)
     cur_widget->addRow(label);
 }
 
+
+template <typename VarType>
+boost::python::object ConfItem<VarType>::getPyValue() const
+{
+	return boost::python::object{itemData};
+}
+
+template <typename VarType>
+void ConfItem<VarType>::setPyValue(boost::python::object& v)
+{
+	setData(boost::python::extract<VarType>(v));
+}
 
 
 // Template specialization for rendering
@@ -115,15 +133,6 @@ void ConfItem<bool>::render(SettingsManager* smngr,QFormLayout* cur_widget)
     //QObject::connect(element,&QCheckBox::stateChanged,this,&ConfItem<bool>::setValue);
 }
 
-template <>
-bool ConfItem<bool>::getValue() const
-{
-    if(element->checkState() == Qt::Checked)
-        return true;
-    return false;
-}
-
-
 template<>
 void  ConfItem<int>::render(SettingsManager* smngr,QFormLayout* cur_widget)
 {
@@ -135,11 +144,25 @@ void  ConfItem<int>::render(SettingsManager* smngr,QFormLayout* cur_widget)
 
 }
 
+
+template <>
+bool ConfItem<bool>::getValue() const
+{
+    if(element->checkState() == Qt::Checked)
+        return true;
+    return false;
+}
+
+
+
 template <>
 int ConfItem<int>::getValue() const
 {
     return element->value();
 }
+
+
+
 
 
 //------------------------------------------------------------------------------
@@ -178,17 +201,11 @@ void NumericConfItem<VarType>::getOptBounds(VarType& lower, VarType& upper) cons
 }
 
 
-
-
-
-
 //Template Specializations
 
 template class ConfItem<bool>;
 template class ConfItem<int>;
 template class NumericConfItem<int>;
-
-
 
 
 #endif // MANAGEDVAR_H

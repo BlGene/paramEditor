@@ -46,16 +46,20 @@ public:
 
     //~ConfItem(){cout << "Destructor: "<<this << endl;}
 
+	//For Qt
     void setValue(VarType &f_itemData);
-
     VarType getValue() const;
 
+	//For python bindings/ everything else
     VarType& getData();
+	void setData(const VarType &f_itemData);
 
-    void print(std::string prefix="") const;
-
-    void render(SettingsManager* smngr,QFormLayout* cur_widget);
-
+	void print(std::string prefix="") const override;
+    void render(SettingsManager* smngr,QFormLayout* cur_widget) override;
+	
+	boost::python::object getPyValue() const ;
+	void setPyValue(boost::python::object& v) ;
+    
     //The assign operator
     ConfItem<VarType> & operator= (const VarType& other)
     {

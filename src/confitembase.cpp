@@ -138,6 +138,19 @@ void ConfItemBase::render(SettingsManager* smngr,QFormLayout* cur_widget)
 }
 
 
+
+boost::python::object ConfItemBase::getPyValue() const
+{
+	return boost::python::object{};
+}
+
+void ConfItemBase::setPyValue(boost::python::object)
+{
+	//pass
+}
+
+
+
 ConfItemBase* ConfItemBase::parent()
 {
     return parentItem;
@@ -215,6 +228,9 @@ BOOST_PYTHON_MODULE(libparamEditor)
     class_<ConfItemBase>("ConfItemBase")
         .def("size",    &ConfItemBase::size)
         .def("getChild",&ConfItemBase::getChild2, return_value_policy<reference_existing_object>() )
+		.def("getValue",&ConfItemBase::getPyValue)
+		.def("setValue",&ConfItemBase::setPyValue)
+		.def("name",	&ConfItemBase::getName)
     ;
 
 }

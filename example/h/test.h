@@ -18,7 +18,7 @@
 using namespace std;
 
 template <typename testType>
-class Test1_1: public ConfItemDerived< Test1_1<testType> >
+class Test1_1: public ConfItemBase
 {
     C_OBJECT // Sets the object name to the class name
 
@@ -32,7 +32,7 @@ class Test1_1: public ConfItemDerived< Test1_1<testType> >
 };
 
 
-class Test1_2_1: public ConfItemDerived<Test1_2_1>
+class Test1_2_1: public ConfItemBase
 {
 public:
     ~Test1_2_1()
@@ -49,7 +49,7 @@ private:
 
 };
 
-class Test1_2: public ConfItemDerived<Test1_2>
+class Test1_2: public ConfItemBase
 {
 public:
     ~Test1_2()
@@ -72,7 +72,7 @@ public:
 
 
 
-class Test1: public ConfItemDerived<Test1>
+class Test1: public ConfItemBase
 {
 public:
     std::string name{"Test1"};
@@ -86,7 +86,7 @@ public:
     C_VAR(int,  var2,    1, "var 2")
     C_VAR(int,  var3,    4, "var 3")
 /*
-	void add_var1_property(bp::class_<Test1, bp::bases<ConfItemDerived> > & cls)
+	void add_var1_property(bp::class_<Test1, bp::bases<ConfItemBase
 	{
 		cls.add_property("var1", get_c_var(&Test1::var1));
 	}
