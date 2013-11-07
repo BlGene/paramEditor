@@ -13,6 +13,27 @@ class QCheckBox;
 class QFormLayout;
 class QVariant;
 
+/*
+namespace boost
+{
+	namespace python
+	{
+		class object;
+	}
+}
+*/
+//#include <boost/python/object_fwd.hpp>
+#if PARAMEDITOR_USE_PYTHON
+	#include <boost/python.hpp>
+	#include <boost/bind.hpp>
+	#include <boost/function.hpp>
+	#undef BO // see http://stackoverflow.com/a/15078676/1037407
+
+	namespace bp = boost::python;
+
+
+#endif //PARAMEDITOR_USE_PYTHON
+
 
 
 /*******************************************************************************
@@ -97,6 +118,8 @@ public:
 
     virtual void render(SettingsManager* smngr,QFormLayout* cur_widget=nullptr);
 
+	virtual boost::python::object add_bindings(){};
+
 
     ConfItemBase* getChild(int row) const
     {
@@ -120,11 +143,38 @@ public:
 
     virtual QVariant data(int column) const;
 
-
-private:
+	//should be private
     std::vector<ConfItemBase*> childItems;
     ConfItemBase *parentItem = nullptr;
 
+private:
+
+};
+
+template <typename Derived>
+class ConfItemDerived : public ConfItemBase
+{
+	virtual boost::python::object add_bindings()
+	{
+		//
+		bp::class_<Derived, bp::bases<ConfItemBase> > cls(name.c_str());
+		boost::python::object obj(Derived{});
+		
+		//Magic (global) scope setting
+		bp::scope sc1 = cls;
+
+		if(childItems.size()>0)
+		{
+			for(int i=0;i<childItems.size();i++)
+			{
+				ConfItemBase * item = childItems.at(i);
+				boost::python::object instance = item->add_bindings();
+				//obj.attr(item->name) = instance;
+
+			}
+		}
+		return obj;
+	}
 };
 
 

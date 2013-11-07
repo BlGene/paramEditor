@@ -13,7 +13,7 @@ SET ( PARAMEDITOR_USE_PYTHON true  CACHE STRING "build Python bindings")
 
 
 SET(CMAKE_CXX_COMPILER             "/usr/bin/clang++")
-SET(CMAKE_CXX_FLAGS "-O0 -ggdb -DGL_GLEXT_PROTOTYPES -lGLEW -std=c++11")
+SET(CMAKE_CXX_FLAGS "-O0 -ggdb -std=c++11")
 
 # enable warnings
 ADD_DEFINITIONS( -Wall -fPIC )

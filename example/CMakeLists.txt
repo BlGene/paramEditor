@@ -7,7 +7,7 @@ SET (CMAKE_CXX_COMPILER             "/usr/bin/clang++")
 
 # enable warnings
 ADD_DEFINITIONS( -Wall -fPIC )
-SET(CMAKE_CXX_FLAGS "-O0 -ggdb -DGL_GLEXT_PROTOTYPES -lGLEW  -std=c++11")
+SET(CMAKE_CXX_FLAGS "-O0 -ggdb -std=c++11")
 
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/..)
@@ -18,6 +18,7 @@ if(NOT EXISTS ${PARAMEDITOR_INCLUDE_DIR}) # and ${PARAMEDITOR_LIBRARIES})
     message( FATAL_ERROR "Failed to find ParamEditor")
 endif()
 
+set( PARAMEDITOR_USE_PYTHON true)
 set( PARAMEDITORDEMO_USE_PYTHON true)
 
 if(PARAMEDITORDEMO_USE_PYTHON)
@@ -37,6 +38,7 @@ if(PARAMEDITORDEMO_USE_PYTHON)
     message("Include dirs of Python: " ${PYTHON_INCLUDE_DIRS} )
     message("Libs of Python: " ${PYTHON_LIBRARIES} )
 
+    add_definitions(-DPARAMEDITOR_USE_PYTHON)
     add_definitions(-DPARAMEDITORDEMO_USE_PYTHON)
 
 endif()

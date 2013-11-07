@@ -82,10 +82,11 @@ int main(int argc, char** argv)
 void register_python()
 {
 	namespace bp = boost::python;
+
+	//This is a runtime evaluated expression
 	bp::class_<Test1, bp::bases<ConfItemBase> > cls_Test1("Test1");
 
 	cls_Test1.add_property("var1", get_c_var(&Test1::var1));
-
 	{
 		bp::scope outer = cls_Test1;
 

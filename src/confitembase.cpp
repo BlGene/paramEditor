@@ -4,8 +4,14 @@
 #include <vector>
 
 #if PARAMEDITOR_USE_PYTHON
-    #include <boost/python.hpp>
-    #undef BO // see http://stackoverflow.com/a/15078676/1037407
+	#include <boost/python.hpp>
+	#include <boost/bind.hpp>
+	#include <boost/function.hpp>
+	#undef BO // see http://stackoverflow.com/a/15078676/1037407
+
+	namespace bp = boost::python;
+
+
 #endif //PARAMEDITOR_USE_PYTHON
 
 
@@ -130,48 +136,7 @@ void ConfItemBase::render(SettingsManager* smngr,QFormLayout* cur_widget)
     }
 
 }
-/*
-void ConfItemBase::createBindings(SettingsManager* smngr,QFormLayout* cur_widget)
-{
-    //cout << "Base Render Called " << endl;
 
-    //Put all the configurations variables in a layout
-    QFormLayout* layout = new QFormLayout();
-
-    if(childItems.size()>0)
-    {
-        //cout << childItems.size() << endl;
-
-        for(int i=0;i<childItems.size();i++)
-        {
-            //cout << "render addr: " << &(childItems.at(i))
-            //     << " "<< childItems.at(i)->name << endl;
-
-            //This calls the overloaded render functions that actually add
-            //elements
-            childItems.at(i)->render(smngr,layout);
-
-        }
-    }
-
-
-    if(cur_widget == nullptr)
-    {
-        smngr->ui->ConfLayout->addRow(layout);
-    }
-
-    else
-    {
-        QGroupBox* box = new QGroupBox(QString(name.c_str()),smngr);
-        box->setLayout(layout);
-
-
-
-        cur_widget->addRow(box);
-    }
-
-}
-*/
 
 ConfItemBase* ConfItemBase::parent()
 {
