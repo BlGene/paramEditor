@@ -78,3 +78,29 @@ int main(int argc, char** argv)
     return application.exec();
 
 }
+
+void register_python()
+{
+	namespace bp = boost::python;
+	bp::class_<Test1, bp::bases<ConfItemBase> > cls_Test1("Test1");
+
+	cls_Test1.add_property("var1", get_c_var(&Test1::var1));
+
+	{
+		bp::scope outer = cls_Test1;
+
+		bp::class_<Test1_2, bp::bases<ConfItemBase> > cls_Test1_2("Test1_2");
+
+		{
+			bp::scope outer = cls_Test1_2;
+
+			// class_ ..
+		}
+	}
+}
+
+BOOST_PYTHON_MODULE(libparamEditorDemo)
+{
+	register_python();
+}
+

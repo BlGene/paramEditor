@@ -39,13 +39,12 @@ ConfItem<VarType>::ConfItem()
 
 
 template< typename VarType>
-ConfItem<VarType>::ConfItem(VarType f_itemData,std::string f_name)
+ConfItem<VarType>::ConfItem(VarType f_itemData,std::string f_name) :
+	itemData(f_itemData)
 {
+	name = f_name;
 
     //cout << "Special Constructor: " << f_name <<" " <<this << endl;
-
-    itemData = f_itemData;
-    name = f_name;
 }
 
 template< typename VarType>

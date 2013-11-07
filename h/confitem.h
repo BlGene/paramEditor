@@ -48,14 +48,13 @@ public:
 
     void setValue(VarType &f_itemData);
 
+    VarType getValue() const;
+
     VarType& getData();
 
     void print(std::string prefix="") const;
 
     void render(SettingsManager* smngr,QFormLayout* cur_widget);
-
-
-    VarType getValue() const;
 
     //The assign operator
     ConfItem<VarType> & operator= (const VarType& other)

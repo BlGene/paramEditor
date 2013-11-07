@@ -10,13 +10,37 @@ ADD_DEFINITIONS( -Wall -fPIC )
 SET(CMAKE_CXX_FLAGS "-O0 -ggdb -DGL_GLEXT_PROTOTYPES -lGLEW  -std=c++11")
 
 
-set(CMAKE_MODULE_PATH ~/local/share/cmake/Modules)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/..)
 message("Looking for modules in: " ${CMAKE_MODULE_PATH})
 
 include(FindParamEditor)
 if(NOT EXISTS ${PARAMEDITOR_INCLUDE_DIR}) # and ${PARAMEDITOR_LIBRARIES})
     message( FATAL_ERROR "Failed to find ParamEditor")
 endif()
+
+set( PARAMEDITORDEMO_USE_PYTHON true)
+
+if(PARAMEDITORDEMO_USE_PYTHON)
+
+    find_package(Boost COMPONENTS filesystem system date_time python REQUIRED)
+    message("Include dirs of boost: " ${Boost_INCLUDE_DIRS} )
+    message("Libs of boost: " ${Boost_LIBRARIES} )
+
+    #Manual setting of python as the python version needs to match the boost
+    #python bindings version. And gentoo FindPythonLibs.cmake cannot find
+    #lower version numbers.
+
+    #find_package(PythonLibs 2.7 REQUIRED )
+    set( PYTHON_INCLUDE_DIRS /usr/include/python2.7)
+    set( PYTHON_LIBRARIES  /usr/lib/libpython2.7.so)
+
+    message("Include dirs of Python: " ${PYTHON_INCLUDE_DIRS} )
+    message("Libs of Python: " ${PYTHON_LIBRARIES} )
+
+    add_definitions(-DPARAMEDITORDEMO_USE_PYTHON)
+
+endif()
+
 
 
 # this command finds Qt4 libraries and sets all required variables
@@ -59,14 +83,37 @@ QT4_WRAP_CPP( SAMPLE_MOC_SRCS ${SAMPLE_MOC_HDRS} )
 
 # we need this to be able to include headers produced by uic in our code
 # (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} ./h ${PARAMEDITOR_INCLUDE_DIR} )
+
+INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} 
+	./h 
+	${PARAMEDITOR_INCLUDE_DIR} 
+	${Boost_INCLUDE_DIRS}
+	${PYTHON_INCLUDE_DIRS}
+	)
+
 # here we instruct CMake to build "sample" executable from all of the source files
-ADD_EXECUTABLE( paramEditorDemo ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
+#ADD_EXECUTABLE( paramEditorDemo ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
+ADD_LIBRARY( paramEditorDemo SHARED ${SAMPLE_SRCS} ${SAMPLE_MOC_SRCS} ${SAMPLE_RC_SRCS} ${SAMPLE_UI_HDRS} )
+
+
 
 # last thing we have to do is to tell CMake what libraries our executable needs,
 # luckily FIND_PACKAGE prepared QT_LIBRARIES variable for us:
-TARGET_LINK_LIBRARIES( paramEditorDemo ${QT_LIBRARIES}
-    ${PARAMEDITOR_LIBRARIES})
+#TARGET_LINK_LIBRARIES( paramEditorDemo 
+#    ${QT_LIBRARIES}
+#    ${PARAMEDITOR_LIBRARIES}
+#    ${Boost_LIBRARIES}
+#    ${PYTHON_LIBRARIES})
+
+
+TARGET_LINK_LIBRARIES( paramEditorDemo
+    ${QT_LIBRARIES}
+    ${PARAMEDITOR_LIBRARIES}
+    ${Boost_LIBRARIES}
+    ${PYTHON_LIBRARIES})
+
+
+
 
 
 INSTALL( TARGETS paramEditorDemo DESTINATION bin )

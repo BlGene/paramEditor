@@ -3,6 +3,12 @@
 
 #include "confitem.h"
 
+#if PARAMEDITORDEMO_USE_PYTHON
+	#include <boost/python.hpp>
+	#include <boost/bind.hpp>
+	#include <boost/function.hpp>
+	#undef BO // see http://stackoverflow.com/a/15078676/1037407
+#endif //PARAMEDITORDEMO_USE_PYTHON
 
 #include <iostream>
 using namespace std;
@@ -87,6 +93,32 @@ public:
 public:
     Test1();
 };
+
+
+#if PARAMEDITORDEMO_USE_PYTHON
+namespace bp = boost::python;
+
+bool get_var1(Test1 & obj)
+{
+	return obj.var1.getValue();
+}
+
+template <typename Base, typename ValueType>
+ValueType get_c_var_helper(Base & base, ConfItem<ValueType> Base::* var)
+{
+	return (base.*var).getValue();
+}
+
+template <typename Base, typename ValueType>
+bp::object get_c_var(ConfItem<ValueType> Base::* var)
+{
+	boost::function<ValueType (Base &)> f(
+			boost::bind(&get_c_var_helper<Base, ValueType >, _1, var));
+	return boost::python::make_function(f,
+			boost::python::default_call_policies(),
+			boost::mpl::vector<ValueType, Base &>());
+}
+#endif
 
 
 #endif // TEST_H

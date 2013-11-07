@@ -130,6 +130,48 @@ void ConfItemBase::render(SettingsManager* smngr,QFormLayout* cur_widget)
     }
 
 }
+/*
+void ConfItemBase::createBindings(SettingsManager* smngr,QFormLayout* cur_widget)
+{
+    //cout << "Base Render Called " << endl;
+
+    //Put all the configurations variables in a layout
+    QFormLayout* layout = new QFormLayout();
+
+    if(childItems.size()>0)
+    {
+        //cout << childItems.size() << endl;
+
+        for(int i=0;i<childItems.size();i++)
+        {
+            //cout << "render addr: " << &(childItems.at(i))
+            //     << " "<< childItems.at(i)->name << endl;
+
+            //This calls the overloaded render functions that actually add
+            //elements
+            childItems.at(i)->render(smngr,layout);
+
+        }
+    }
+
+
+    if(cur_widget == nullptr)
+    {
+        smngr->ui->ConfLayout->addRow(layout);
+    }
+
+    else
+    {
+        QGroupBox* box = new QGroupBox(QString(name.c_str()),smngr);
+        box->setLayout(layout);
+
+
+
+        cur_widget->addRow(box);
+    }
+
+}
+*/
 
 ConfItemBase* ConfItemBase::parent()
 {
@@ -200,7 +242,6 @@ QVariant ConfItemBase::data(int column) const
 
 using namespace boost::python;
 
-
 //Use *lib*paramEditor because cmake automatically adds a "lib" prefix to the library
 //also this "lib" prefix is expected on unix systems.
 BOOST_PYTHON_MODULE(libparamEditor)
@@ -210,7 +251,6 @@ BOOST_PYTHON_MODULE(libparamEditor)
         .def("size",    &ConfItemBase::size)
         .def("getChild",&ConfItemBase::getChild2, return_value_policy<reference_existing_object>() )
     ;
-
 
 }
 
